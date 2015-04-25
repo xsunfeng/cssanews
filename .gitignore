@@ -1,0 +1,4 @@
+**/*.pyc
+cssanews/migrations/*
+cssanews/settings.py
+**/.DS_STORE
