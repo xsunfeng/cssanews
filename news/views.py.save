@@ -28,8 +28,8 @@ def list(request):
 def add(request):
 	print "add"
 	title = request.REQUEST.get('title','').encode('utf-8')
-	author = request.REQUEST.get('author', '').encode('utf-8')
-	content = request.REQUEST.get('content', '').encode('utf-8')
+	author = request.REQUEST.get('author', '')
+	content = request.REQUEST.get('content', '')
 	tz = pytz.timezone("US/Eastern")
 	print title, author, content
 	print tz.localize(datetime.datetime.now())

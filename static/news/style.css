@@ -53,8 +53,9 @@
 
 #container{
 	margin-left:1em;
-      margin-right:1em;
+      	margin-right:1em;
 	margin-top:4em;
+	margin-bottom:1em;
 }
 
 /*#add-article-btn {
