@@ -79,9 +79,39 @@ $( document ).ready(function() {
 		                	tinymce.init({
 			                   	selector:'textarea'
 		                	});
+
 				$("#news-category").hide();
 				$("#return").show();
-				    	$("#add-article-submit-btn").click(function(){
+
+				$("#extract-url-btn").click(function(){
+					$('.ui.modal.extract_url').modal('show');
+					
+					$("#extract-url-submit-btn").click(function(){
+						//tinyMCE.activeEditor.setContent($('#extract-url').val());
+						url = $('#extract-url').val();
+						$.ajax({
+							url: '/news/extract_url/',
+							type: 'post',
+							data: {
+								url: url,
+								action: 'action',
+							},
+							success: function(xhr) {
+								console.log(xhr.content);
+								$('.title').val(xhr.title);
+								tinyMCE.activeEditor.setContent(xhr.content);
+							},
+							error: function(xhr) {
+								if (xhr.status == 403) {
+									notify('error', xhr.responseText);
+								}
+							}
+						})			
+					});
+				});
+
+
+			    	$("#add-article-submit-btn").click(function(){
 			    		title = $('.title').val();
 			    		author = $('.author').val();
 			    		content = tinyMCE.activeEditor.getContent();
