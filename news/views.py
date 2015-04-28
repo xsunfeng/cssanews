@@ -30,20 +30,48 @@ def add(request):
 	title = request.REQUEST.get('title','')
 	author = request.REQUEST.get('author', '')
 	content = request.REQUEST.get('content', '')
-	print "1"
 	tz = pytz.timezone("US/Eastern")
 	print title, author, content
 	print tz.localize(datetime.datetime.now())
 	tmp = Article(title=title, author=author, content=content, pub_date=tz.localize(datetime.datetime.now()))
-	print "2"
 	tmp.save()
-	print "3"
 	response = {}
 	return HttpResponse(json.dumps(response), content_type='application/json')
 
+@csrf_exempt  
 def detail(request, news_id):
+<<<<<<< HEAD
     	try:
         		print news_id
     	except Question.DoesNotExist:
         		raise Http404("Question does not exist")
     	return render(request, 'news/article.html', {'news_id': news_id})
+=======
+	print "detail"
+	article = Article.objects.get(id = news_id)
+	try:
+		print news_id
+	except Question.DoesNotExist:
+		raise Http404("Question does not exist")
+	return render(request, 'news/article.html', {'article': article})
+
+@csrf_exempt  
+def delete(request):
+	print "delete"
+	article_id = request.REQUEST.get('article_id','')
+	print type(article_id)
+	a = Article.objects.get(id=int(str(article_id)))
+	try:
+		a.delete()
+	except IOError as e:
+    		print "I/O error({0}): {1}".format(e.errno, e.strerror)
+	except ValueError:
+    		print "Could not convert data to an integer."
+	except:
+    		print "Unexpected error:", sys.exc_info()[0]
+	print "4"
+	print "a"+str(a.id)+"a"
+	print "title="+a.title
+	print "content="+a.content
+	return render(request, 'news/article.html', {})
+>>>>>>> ef5a76cac83f9a03c24237ffec30fcacd97ffd72
