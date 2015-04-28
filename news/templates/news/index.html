@@ -1,48 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-    	<head>
-	        	<meta charset="utf-8">
-	        	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	        	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	        	<title>Penn State CSSA News</title>
+{% extends 'base.html' %}
+{% load static %}
 
-	       	 <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" rel="stylesheet" type="text/css" class="ui" />
+{% block header %}
+{% endblock %}
 
-		{% load staticfiles %}
-		<link rel="stylesheet" type="text/css" href="{% static 'news/style.css' %}" />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.js"></script>
-		<script src="{% static 'news/layout.js' %}"></script>
-    	</head>
-    	<body>
-		<div class="ui red vertical demo sidebar large menu">
-		  	<a class="item">
-		    		<i class="home icon"></i>
-			    	Home
-		  	</a>
-		  	<a class="active item">
-			    	<i class="heart icon"></i>
-			    	Current Section
-		  	</a>
-		  	<a class="item">
-		    		<i class="facebook icon"></i>
-			    	我要约 车
-		  	</a>
-		  	<div class="item">
-	 			<b>More</b>
-		    		<div class="menu">
-			      		<a class="item">About</a>
-			      		<a class="item">Contact Us</a>
-			    	</div>
-			  </div>
-		</div>
+{% block body %}
 	    	<div class="pusher">
-		    	<div >
+		    	<div id="container">
 				<div class="ui top fixed large menu">
-			    		<a class="item feng-menu">
+			   		<a class="item feng-menu">
 				      		<i class="sidebar icon"></i>Menu
-				    	</a>				    
-		                    		<div class="ui dropdown item">
+				    	</a>	
+				    	<a id="return" class="item" style="display: none;">
+				    		<i class="chevron left icon"></i>
+				      		返回
+				    	</a>	
+				  	<a id="page-title" class="return item" style="display: none;">
+				    	</a>	 
+			    
+		                    		<div id="news-category" class="ui dropdown item">
 		                        		<div class="text">全部消息</div>
 	                    				<i class="dropdown icon"></i>
 	            	    				<div class="menu">
@@ -54,69 +30,30 @@
 		                  		</div>
 			    		<img class="ui image right floated item" style="height:40px; padding:3px;" src="http://www.psucssa.org/img/cssa/cssa-logo.png"/>
 				</div>
-				<div class="ui cards">
-					<div class="ui card">
-						<img class="ui image" src="http://semantic-ui.com/images/wireframe/image.png"/>
-						<div class="content">
-				    			<i class="right floated star icon"></i>
-					    		<div class="header">Title</div>
-					    		<div class="description">
-					     		 	<p>Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.</p>
-					    		</div>
-					  	</div>
-					  	<div class="extra content">
-						    	<span class="left floated like">
-					     	 		<i class="like icon"></i>喜欢
-						    	</span>
-						   	 <span class="right floated">
-						      		详细信息
-						    	</span>
-					  	</div>
-					</div>
+<!-- 		                        <div id="add-article-btn" class="circular ui icon huge blue button">
+		                            	<i class="icon plus"></i>
+		                        </div> -->
 
-					<div class="ui card">
-						<img class="ui image" src="http://semantic-ui.com/images/wireframe/image.png"/>
-						<div class="content">
-				    			<i class="right floated star icon"></i>
-					    		<div class="header">Title</div>
-					    		<div class="description">
-					     		 	<p>Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.</p>
-					    		</div>
-					  	</div>
-					  	<div class="extra content">
-						    	<span class="left floated like">
-					     	 		<i class="like icon"></i>喜欢
-						    	</span>
-						   	 <span class="right floated">
-						      		详细信息
-						    	</span>
-					  	</div>
-					</div>
+<div id="more-actions" class="ui floating icon dropdown button">
+    <i class="list layout icon"></i>
+    <!-- <span class="text">M</span> -->
+    <div class="menu" style="left:auto; right:0;">
+      <div class=" item">
+        	<i class="ui chevron left icon"></i>Left
+        <div class="left menu">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+      <div class="item" id="add-article-btn">
+	<i class="icon plus"></i>Add
+      </div>
+    </div>
+  </div>
+				<div id="main-container" >
 
-					<div class="ui card">
-						<img class="ui image" src="http://semantic-ui.com/images/wireframe/image.png"/>
-						<div class="content">
-				    			<i class="right floated star icon"></i>
-					    		<div class="header">Title</div>
-					    		<div class="description">
-					     		 	<p>Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.</p>
-					    		</div>
-					  	</div>
-					  	<div class="extra content">
-						    	<span class="left floated like">
-					     	 		<i class="like icon"></i>喜欢
-						    	</span>
-						   	 <span class="right floated">
-						      		详细信息
-						    	</span>
-					  	</div>
-					</div>
-                                        
 				</div>
-				</div>
-	                        <div id="add-article-btn" class="circular ui icon huge blue button">
-	                            	<i class="icon plus"></i>
-	                        </div>
 			</div>
-    	</body>
-</html>
+		</div>
+{% endblock %}
