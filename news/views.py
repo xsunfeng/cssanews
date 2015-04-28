@@ -8,6 +8,7 @@ import datetime
 
 def index(request):
 	print "index"
+	context = {}
 	return render(request, 'news/index.html', context)
 # Create your views here.
 
@@ -38,7 +39,7 @@ def add(request):
 	tmp.save()
 	print "3"
 	response = {}
-	return HttpResponse(json.dumps(response), mimetype='application/json')
+	return HttpResponse(json.dumps(response), content_type='application/json')
 
 def detail(request, news_id):
     	try:
