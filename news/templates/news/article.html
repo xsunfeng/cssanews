@@ -1,26 +1,10 @@
-
-			<div>
-				<div class="ui cards">
-					<div class="ui card">
-
-					<div class="ui card">
-						<img class="ui image" src="http://semantic-ui.com/images/wireframe/image.png"/>
-						<div class="content">
-				    			<i class="right floated star icon"></i>
-					    		<div class="header">Title</div>
-					    		<div class="description">
-					     		 	<p>Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.</p>
-					    		</div>
-					  	</div>
-					  	<div class="extra content">
-						    	<span class="left floated like">
-					     	 		<i class="like icon"></i>喜欢
-						    	</span>
-						   	 <span class="right floated">
-						      		详细信息
-						    	</span>
-					  	</div>
-					</div>
-                                    
-				</div>
-			</div>
+<div class="ui piled segment">
+	<h4 class="ui header">{{ article.title }}</h4>
+	{{ article.author }} | {{ article.pub_date }}
+	<p>{{ article.content | safe }}</p>
+	<div class="ui basic buttons">
+  		<div class="ui button delete-article">删除</div>
+  		<div class="ui button">Two</div>
+  		<div class="ui button">Three</div>
+	</div>
+</div>

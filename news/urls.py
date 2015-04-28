@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
 	url(r'^edit/$', views.edit, name='edit'),
 	url(r'^add/$', views.add, name='add'),
+	url(r'^delete/$', views.delete, name='delete'),
 	url(r'^list/$', views.list, name='list'),
 	url(r'^(?P<news_id>[0-9]+)/$', views.detail, name='detail'),
 	
