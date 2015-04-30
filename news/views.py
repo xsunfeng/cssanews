@@ -103,7 +103,6 @@ def extract_url(request):
 			# thumb
 			thumb_url = ""
 			print "4"
-<<<<<<< Updated upstream
 			if (soup.find('div', {'class' :'rich_media_thumb_wrp'}) != None):
 				print "hehe"
 				p = re.compile(ur'"http:.*"')
@@ -116,28 +115,14 @@ def extract_url(request):
 			print "5"
 			thumb_url = thumb_url.replace('"',' ')
 			print "thumb_url="+thumb_url
-			print "5"
 			# content
 			content = soup.find("div", class_="rich_media_content").encode('utf-8')
 			response["title"] = title
 			response["content"] = content
 			response["thumb_url"] = thumb_url
 			tmp = json.dumps(response)
-=======
 			#title = soup.find('h2', {'class' :'rich_media_title'}).encode('utf-8')
 			#content = soup.find("div", class_="rich_media_content").encode('utf-8')
-			print "###############"
-			title = soup.find('h2', {'class' :'rich_media_title'}).text
-			img =  soup.find("div", class_="rich_media_content").find("img")
-			content = soup.find("div", class_="rich_media_content").encode('utf-8')			
-			response["title"] = title
-			response["content"] = content
-			print response["title"]
-			print response["content"]
-			print response['img']
-			tmp = json.dumps({"title": title, "content": content, "image":img})
->>>>>>> Stashed changes
-			print "6"
 			return HttpResponse(tmp, content_type="application/json")
 		except urllib2.HTTPError, e:
 			print 'error', e.code
