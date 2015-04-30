@@ -99,6 +99,7 @@ $( document ).ready(function() {
 							success: function(xhr) {
 								console.log(xhr.content);
 								$('.title').val(xhr.title);
+								$('.thumb_url').val(xhr.thumb_url);
 								tinyMCE.activeEditor.setContent(xhr.content);
 							},
 							error: function(xhr) {
@@ -114,6 +115,8 @@ $( document ).ready(function() {
 			    	$("#add-article-submit-btn").click(function(){
 			    		title = $('.title').val();
 			    		author = $('.author').val();
+			    		desc = $('.desc').val();
+			    		thumb_url = $('.thumb_url').val();
 			    		content = tinyMCE.activeEditor.getContent();
 					$.ajax({
 						url: '/news/add/',
@@ -122,6 +125,8 @@ $( document ).ready(function() {
 							title: title,
 							author: author,
 							content: content,
+							desc: desc,
+							thumb_url: thumb_url,
 						},
 						success: function(xhr) {
 

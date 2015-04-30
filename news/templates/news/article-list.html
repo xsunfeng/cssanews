@@ -2,12 +2,12 @@
 	{% for article in articles %}
 	
 		<div class="ui card" id="article-{{ article.id }}" data-id="{{ article.id }}">
-			<img class="ui image" src="http://semantic-ui.com/images/wireframe/image.png"/>
+			<img class="ui image" src="{{article.thumb_url}}"/>
 			<div class="content">
 	    			<i class="right floated star icon"></i>
 		    		<div class="header">{{article.title}}</div>
 		    		<div class="description">
-		     		 	{{article.content | safe}}
+		     		 	{{article.desc | safe}}
 		    		</div>
 		  	</div>
 		  	<div class="extra content">

@@ -9,6 +9,8 @@ import datetime
 import urllib2
 from bs4 import BeautifulSoup
 
+import re
+
 def index(request):
 	print "index"
 	context = {}
@@ -33,10 +35,10 @@ def add(request):
 	title = request.REQUEST.get('title','').encode('utf-8')
 	author = request.REQUEST.get('author', '').encode('utf-8')
 	content = request.REQUEST.get('content', '').encode('utf-8')
+	thumb_url = request.REQUEST.get('thumb_url', '').encode('utf-8')
+	desc = request.REQUEST.get('desc', '').encode('utf-8')
 	tz = pytz.timezone("US/Eastern")
-	print title, author, content
-	print tz.localize(datetime.datetime.now())
-	tmp = Article(title=title, author=author, content=content, pub_date=tz.localize(datetime.datetime.now()))
+	tmp = Article(title=title, author=author, content=content, thumb_url=thumb_url, desc=desc, pub_date=tz.localize(datetime.datetime.now()))
 	tmp.save()
 	response = {}
 	return HttpResponse(json.dumps(response), content_type='application/json')
@@ -94,21 +96,35 @@ def extract_url(request):
 			html_page = resp.read()
 			print "3"
 			soup = BeautifulSoup(html_page)
-			# date = soup.find('span', {'class' :'grd'}).text
-			# moddate = soup.find('span', {'class' :'moddate'}).text
+
+			for link in soup.findAll('img'):
+				link['style'] = "width: auto; max-width: 100%;"
+				if link.has_key('data-src'):
+					link['src'] = link['data-src']
+			# title
+			title = soup.find('h2', {'class' :'rich_media_title'}).text
+			# thumb
+			thumb_url = ""
 			print "4"
-			title = soup.find('h2', {'class' :'rich_media_title'}).encode('utf-8')
+			if (soup.find('div', {'class' :'rich_media_thumb_wrp'}) != None):
+				print "hehe"
+				p = re.compile(ur'"http:.*"')
+				test_str = soup.find('div', {'class' :'rich_media_thumb_wrp'}).encode("utf-8")
+				thumb_url = re.search(p, test_str).group()
+			else: 
+				print "haha"
+				img =  soup.find("div", class_="rich_media_content").find("img")
+				thumb_url = '"'+img['data-src']+'"'
+			print "5"
+			thumb_url = thumb_url.replace('"',' ')
+			print "thumb_url="+thumb_url
+			print "5"
+			# content
 			content = soup.find("div", class_="rich_media_content").encode('utf-8')
-			print "###############"
 			response["title"] = title
 			response["content"] = content
-			print response["title"]
-			print response["content"]
-			print "@@@@@@@@@@@@"
-			print "5"
-			print type(title)
-			print type(content)
-			tmp = json.dumps({"title": title, "content": content})
+			response["thumb_url"] = thumb_url
+			tmp = json.dumps(response)
 			print "6"
 			return HttpResponse(tmp, content_type="application/json")
 		except urllib2.HTTPError, e:
@@ -120,6 +136,4 @@ def extract_url(request):
 		the_page = resp.read()
 		response["title"] = ""
 		response["content"] = the_page
-	print response["title"] 
-	print response["content"] 
     	return HttpResponse(json.dumps(response), content_type='application/json')
