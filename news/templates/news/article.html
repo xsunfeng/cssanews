@@ -24,30 +24,61 @@
 			{{ article.author }} | {{ article.pub_date }}
 			<p>{{ article.content | safe }}</p>
 			<div class="ui basic buttons">
-		  		<div class="ui button delete-article">删除</div>
+		  		<div class="ui button" id="delete-article">删除</div>
 		  		<div class="ui button">Two</div>
 		  		<div class="ui button">Three</div>
 			</div>
 		</div>
+			<div class="ui basic modal">
+	  <i class="close icon"></i>
+	  <div class="header">
+	    真的要删除吗？
+	  </div>
+	  <div class="content">
+	    <div class="image">
+	      <i class="archive icon"></i>
+	    </div>
+	  </div>
+	  <div class="actions">
+	    <div class="two fluid ui inverted buttons">
+	      <div class="ui red basic inverted button">
+	        <i class="remove icon"></i>
+	        取消
+	      </div>
+	      <div class="ui green basic inverted button" id = "article-confirm-delete">
+	        <i class="checkmark icon"></i>
+	        确认删除
+	      </div>
+	    </div>
+	  </div>
 	</div>
+	</div>
+
 </div>
 <script type="text/javascript">
-	$(".delete-article").click(function(){
-		$.ajax({
-			url: '/news/delete/',
-			type: 'post',
-			data: {
-				article_id: article_id,
-			},
-			success: function(xhr) {
-				listNews();
-			},
-			error: function(xhr) {
-				if (xhr.status == 403) {
-					notify('error', xhr.responseText);
+	$("#delete-article").click(function(){
+		$('.basic.modal').modal('show');
+		$("#article-confirm-delete").click(function(){
+			myRegexp = /\/\d+\//g;
+			myString = window.location.href;
+			match = myRegexp.exec(myString);
+			article_id = match[0].replace(/\//g, "")
+			$.ajax({
+				url: '/news/delete/',
+				type: 'post',
+				data: {
+					article_id: article_id,
+				},
+				success: function(xhr) {
+					window.location.href = "/";
+				},
+				error: function(xhr) {
+					if (xhr.status == 403) {
+						notify('error', xhr.responseText);
+					}
 				}
-			}
-		})
+			})			
+		});
 	});
 
 </script>

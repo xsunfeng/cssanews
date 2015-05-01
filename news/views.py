@@ -113,12 +113,12 @@ def extract_url(request):
 				thumb_url = '"'+img['data-src']+'"'
 			print "5"
 			thumb_url = thumb_url.replace('"',' ')
-			print "thumb_url="+thumb_url
 			# content
 			content = soup.find("div", class_="rich_media_content").encode('utf-8')
 			response["title"] = title
 			response["content"] = content
 			response["thumb_url"] = thumb_url
+			print "thumb_url="+thumb_url
 			tmp = json.dumps(response)
 			#title = soup.find('h2', {'class' :'rich_media_title'}).encode('utf-8')
 			#content = soup.find("div", class_="rich_media_content").encode('utf-8')

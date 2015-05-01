@@ -14,6 +14,7 @@ $( document ).ready(function() {
 				$(".more-detail").click(function(){
 					article_id = $(this).parent().parent().attr("data-id");
 					window.location.href = '/news/' + article_id;
+					$("#delete-article").attr("data-id", article_id);
 				})
 			},
 			error: function(xhr) {

@@ -106,5 +106,31 @@
 			})			
 		});	
 	});
+	$("#add-article-submit-btn").click(function(){
+    		title = $('.title').val();
+    		author = $('.author').val();
+        		desc = $('.desc').val();
+    		thumb_url = $('.thumb_url').val();
+    		content = tinyMCE.activeEditor.getContent();
+		$.ajax({
+			url: '/news/add/',
+			type: 'post',
+			data: {
+				title: title,
+				author: author,
+				content: content,
+				desc: desc,
+				thumb_url: thumb_url,
+			},
+			success: function(xhr) {
+				window.location.href = "/";
+			},
+			error: function(xhr) {
+				if (xhr.status == 403) {
+					notify('error', xhr.responseText);
+				}
+			}
+		})
+	});
 </script>
 {% endblock %}
