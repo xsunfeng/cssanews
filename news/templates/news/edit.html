@@ -1,51 +1,110 @@
-<div >
-	撰写新消息
-	<div class="ui fluid labeled input">
-	  	<div class="ui label">
-	    		标题
-	  	</div>
-	  	<input class="title" type="text" placeholder="此处应填写标题信息">
-	</div>
-	<div class="ui fluid labeled input">
-	  	<div class="ui label">
-	    		作者
-	  	</div>
-	  	<input class="author" type="text" placeholder="此处应填写作者信息">
-	</div>
-	<div class="ui fluid labeled input">
-	  	<div class="ui label">
-	    		摘要
-	  	</div>
-	  	<input class="desc" type="text" placeholder="此处应填写文章摘要">
-	</div>
-	<div class="ui fluid labeled input" style="visibility: hidden;">
-	  	<input class="thumb_url" type="text" placeholder="此处应填写文章摘要">
-	</div>
-	<textarea rows="10">Easy! You should check out MoxieManager!</textarea>
-	<div class="ui divider"></div>
-	<div class="left floated ui button" id="extract-url-btn">从url提取</div>
-	<div class="left floated ui button">保存草稿</div>
-	<div class="left floated negative ui button">舍弃</div>
-	<div id="add-article-submit-btn" class="right floated  positive ui button" >发布</div>
-	
-	<div class="ui modal extract_url">
-	  	<i class="close icon"></i>
-	  	<div class="header">
-	    		Please insert url here
-	  	</div>
-	  	<div class="content">
-	    		<div class="image">
-	      			An image can appear on left or an icon
-	    		</div>
-	    		<div class="description">
-	      			<div class="ui input" style="width:100%;">
-  					<input id="extract-url" type="text" placeholder="Search...">
-				</div>
-	    		</div>
-	  	</div>
-	  	<div class="actions">
-	    		<div class="ui button">Cancel</div>
-	    		<div class="ui button" id="extract-url-submit-btn">OK</div>
-	  	</div>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block body %}
+<div class="pusher">
+    	<div class="container">
+		<div class="ui top fixed large menu">
+	   		<a class="item feng-menu">
+		      		<i class="sidebar icon"></i>Menu
+		    	</a>	
+		    	<a id="return" class="item" style="display: none;">
+		    		<i class="chevron left icon"></i>
+		      		
+		    	</a>	
+		  	<a href="/" class="item">首页
+		    	</a>	 
+	    		<img class="ui image right floated item" style="margin:0px; height:40px; padding:3px;" src="http://www.psucssa.org/img/cssa/cssa-logo.png"/>
+		</div>
+		<div class="ui segment" style="max-width:900px; margin:0 auto;">
+			撰写新消息
+			<div class="ui fluid labeled input">
+			  	<div class="ui label">
+			    		标题
+			  	</div>
+			  	<input class="title" type="text" placeholder="此处应填写标题信息">
+			</div>
+			<div class="ui fluid labeled input">
+			  	<div class="ui label">
+			    		作者
+			  	</div>
+			  	<input class="author" type="text" placeholder="此处应填写作者信息">
+			</div>
+			<div class="ui fluid labeled input">
+			  	<div class="ui label">
+			    		摘要
+			  	</div>
+			  	<input class="desc" type="text" placeholder="此处应填写文章摘要">
+			</div>
+			<div class="ui fluid labeled input" style="visibility: hidden; height:0px;">
+			  	<input class="thumb_url" type="text" placeholder="此处应填写文章摘要">
+			</div>
+			<textarea rows="10"></textarea>
+			<div class="ui divider"></div>
+			<div class="left floated ui button extract-url-btn">从url提取</div>
+			<div class="left floated ui button">保存草稿</div>
+			<div class="left floated negative ui button">舍弃</div>
+			<div id="add-article-submit-btn" class="right floated  positive ui button" >发布</div>
+			
+			<div class="ui modal extract-url-modal">
+			  	<i class="close icon"></i>
+			  	<div class="header">
+			    		Please insert url here
+			  	</div>
+			  	<div class="content">
+			    		<div class="description">
+			      			<div class="ui input" style="width:100%;">
+		  					<input class="extract-url-text" type="text" placeholder="Search...">
+						</div>
+			    		</div>
+			  	</div>
+			  	<div class="actions">
+			    		<div class="ui button modal-cancel">取消</div>
+			    		<div class="ui button extract-url-submit-btn">确认</div>
+			  	</div>
+			</div>
+		</div>
 	</div>
 </div>
+<script type="text/javascript">
+    	tinymce.init({
+           		selector:'textarea'
+    	});
+	$(".extract-url-btn").click(function(){
+		// $('body').dimmer('show');
+		$('.ui.modal.extract-url-modal').show();
+		$(".modal-cancel").click(function(){
+			$('.ui.modal.extract-url-modal').hide();
+			// $('body').dimmer('hide');
+		});
+		$(".extract-url-submit-btn").click(function(){
+			//tinyMCE.activeEditor.setContent($('#extract-url').val());
+			url = $('.extract-url-text').val();
+			$.ajax({
+				url: '/news/extract_url/',
+				type: 'post',
+				data: {
+					url: url,
+					action: 'action',
+				},
+				success: function(xhr) {
+					console.log(xhr.content);
+					$('.title').val(xhr.title);
+					$('.thumb_url').val(xhr.thumb_url);
+					tinyMCE.activeEditor.setContent(xhr.content);
+					$('.ui.modal.extract-url-modal').hide();
+					// $('body').dimmer('hide');
+				},
+				error: function(xhr) {
+					if (xhr.status == 403) {
+						notify('error', xhr.responseText);
+					}
+				}
+			})			
+		});	
+	});
+</script>
+{% endblock %}

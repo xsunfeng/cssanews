@@ -26,7 +26,8 @@ def edit(request):
 @csrf_exempt  
 def list(request):
 	print "list"
-	context = {'articles': Article.objects.all(),}
+	context = {}
+	context['articles'] = Article.objects.all()
 	return render(request, 'news/article-list.html', context)
 
 @csrf_exempt  
@@ -104,12 +105,10 @@ def extract_url(request):
 			thumb_url = ""
 			print "4"
 			if (soup.find('div', {'class' :'rich_media_thumb_wrp'}) != None):
-				print "hehe"
 				p = re.compile(ur'"http:.*"')
 				test_str = soup.find('div', {'class' :'rich_media_thumb_wrp'}).encode("utf-8")
 				thumb_url = re.search(p, test_str).group()
 			else: 
-				print "haha"
 				img =  soup.find("div", class_="rich_media_content").find("img")
 				thumb_url = '"'+img['data-src']+'"'
 			print "5"

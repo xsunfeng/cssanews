@@ -14,10 +14,7 @@
 
             <!-- Place inside the <head> of your HTML -->
             <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-            <script>
-
-            </script>
-
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     </head>
     <body id="main-body">
 
@@ -32,10 +29,16 @@
                     <i class="heart icon"></i>
                     收藏
             </a>
-            <a class="item">
-                    <i class="facebook icon"></i>
-                    其它
-            </a>
+            {% if username %}
+                <a class="item username">{{username}}
+                        <i class="user icon"></i>
+                </a>
+            {% else %}
+                <a class="item username" href="/login">登录
+                        <i class="user icon"></i>
+                </a>
+            {% endif %}
+
             <div class="item">
                 <b>更多</b>
                     <div class="menu">

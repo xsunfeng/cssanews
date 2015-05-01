@@ -1,0 +1,74 @@
+
+<!-- <form class="ui two column middle aligned relaxed fitted stackable grid" action="" method="post">
+    {% csrf_token %}
+    <div class="column">
+      <label for="username">User name:</label>
+      <input type="text" name="username" value="" id="username">
+      <label for="password">Password:</label>
+      <input type="password" name="password" value="" id="password">
+
+      <input type="submit" value="login" />
+      <input type="hidden" name="next" value="{{ next|escape }}" />
+    </div>
+</form> -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+            <title>Penn State CSSA News</title>
+
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" rel="stylesheet" type="text/css" class="ui" />
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      </head>
+      <body>
+<div style ="margin:10px;">
+<div class="ui two column middle aligned relaxed fitted stackable grid">
+      <div class="column">
+            <form action="" method="post">
+            {% csrf_token %}
+                  <div class="column">
+                  <div class="ui form segment">
+                        <div class="field">
+                                <label>用户名</label>
+                                <div class="ui left icon input">
+                                  <input type="text" name="username" value="" id="username" placeholder="Username">
+                                  <i class="user icon"></i>
+                                </div>
+                        </div>
+                        <div class="field">
+                              <label>密码</label>
+                                <div class="ui left icon input">
+                                  <input type="password" name="password" value="" id="password" placeholder="Password">
+                                  <i class="lock icon"></i>
+                                </div>
+                        </div>
+                        <input type="submit" value="登录" class="ui blue submit button">
+                        <input type="hidden" name="next" value="{{ next|escape }}" />
+                  </div>
+                  </div>
+            </form>
+      </div>
+  <div class="ui vertical divider">
+    Or
+  </div>
+  <div class="center aligned column">
+  <h1>Create an account</h1>
+
+      <form action="" method="post">
+      {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Create the account">
+      </form>
+  </div>
+</div>
+
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.js"></script>
+            <script src="{% static 'news/layout.js' %}"></script>
+    </body>
+</html>
+

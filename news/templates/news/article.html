@@ -1,10 +1,54 @@
-<div class="ui stacked segment" style="max-width:900px; margin: 0 auto; padding: 24px;">
-	<h1 class="ui header">{{ article.title }}</h1>
-	{{ article.author }} | {{ article.pub_date }}
-	<p>{{ article.content | safe }}</p>
-	<div class="ui basic buttons">
-  		<div class="ui button delete-article">删除</div>
-  		<div class="ui button">Two</div>
-  		<div class="ui button">Three</div>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block body %}
+<div class="pusher">
+    	<div class="container">
+		<div class="ui top fixed large menu">
+	   		<a class="item feng-menu">
+		      		<i class="sidebar icon"></i>Menu
+		    	</a>	
+		    	<a id="return" class="item" style="display: none;">
+		    		<i class="chevron left icon"></i>
+		      		
+		    	</a>	
+		  	<a href="/" class="item">首页
+		    	</a>	 
+	    		<img class="ui image right floated item" style="margin:0px; height:40px; padding:3px;" src="http://www.psucssa.org/img/cssa/cssa-logo.png"/>
+		</div>
+		<div class="ui stacked segment" style="max-width:900px; margin: 0 auto; padding: 24px;">
+			<h1 class="ui header">{{ article.title }}</h1>
+			{{ article.author }} | {{ article.pub_date }}
+			<p>{{ article.content | safe }}</p>
+			<div class="ui basic buttons">
+		  		<div class="ui button delete-article">删除</div>
+		  		<div class="ui button">Two</div>
+		  		<div class="ui button">Three</div>
+			</div>
+		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(".delete-article").click(function(){
+		$.ajax({
+			url: '/news/delete/',
+			type: 'post',
+			data: {
+				article_id: article_id,
+			},
+			success: function(xhr) {
+				listNews();
+			},
+			error: function(xhr) {
+				if (xhr.status == 403) {
+					notify('error', xhr.responseText);
+				}
+			}
+		})
+	});
+
+</script>
+{% endblock %}
